@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "Menu": {
+      "title": "Menu",
+      "description": "Daily food menu for the cafeteria.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date", "description": "The date for this menu (YYYY-MM-DD)" },
+        "items": {
+          "type": "array",
+          "description": "List of food items in the menu",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": { "type": "string", "description": "e.g., Main Course, Soup, Dessert" },
+              "name": { "type": "string", "description": "Name of the dish" }
+            }
+          }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["date", "items"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Record of a person eating in the cafeteria.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The ID of the user" },
+        "userName": { "type": "string", "description": "Display name of the user" },
+        "date": { "type": "string", "format": "date", "description": "Date of attendance" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "date", "timestamp"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Profile information for employees and admins.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "employee"] }
+      },
+      "required": ["name", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/menus/{menuId}": {
+      "schema": "Menu",
+      "description": "Collection of daily menus."
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Collection of daily attendance records."
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles."
+    }
+  }
+}
